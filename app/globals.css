@@ -1,26 +1,136 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f4fff8;
+  --foreground: #213026;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-montserrat), sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-montserrat), sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* clip, not hidden — avoids breaking position:sticky on children */
+  overflow-x: clip;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Offset anchor-jump targets so fixed nav doesn't cover them */
+  scroll-padding-top: 72px;
+}
+
+/* === ANIMATIONS === */
+
+/* Hero entrance: elements fade + slide up on page load */
+@keyframes hero-enter {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Leaf fly-in entrances */
+@keyframes leaf-fly-left {
+  from { opacity: 0; transform: translate(-44px, 16px) rotate(-8deg) scale(0.8); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes leaf-fly-right {
+  from { opacity: 0; transform: translate(44px, 12px) rotate(8deg) scale(0.8); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes leaf-fly-top {
+  from { opacity: 0; transform: translate(10px, -44px) rotate(-6deg) scale(0.78); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes leaf-fly-bottom {
+  from { opacity: 0; transform: translate(-14px, 44px) rotate(10deg) scale(0.78); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* Hero background Ken Burns: slow zoom out */
+@keyframes hero-zoom {
+  from { transform: scale(1.09); }
+  to   { transform: scale(1); }
+}
+
+/* Hero frame: full-screen rectangle contracts into the leaf shape — one smooth ease-out move. */
+@keyframes hero-frame {
+  0% {
+    border-radius: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: calc(50% - 50vw);
+    width: 100vw;
+    min-height: 100svh;
+  }
+  100% {
+    border-radius: 8px 80px 8px 80px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    margin-left: 0;
+    width: 100%;
+    min-height: calc(100svh - 2rem);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-15px); }
+}
+
+/* Hero progress bar — scaleX from 0→1 on origin-left */
+@keyframes bar-fill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* Pulsing ring on active tech card dot */
+@keyframes pulse-ring {
+  0%   { box-shadow: 0 0 0 0   rgba(45, 186, 93, 0.55); }
+  100% { box-shadow: 0 0 0 14px rgba(45, 186, 93, 0); }
+}
+
+/* CTA button amber glow */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0   rgba(255, 184, 0, 0.55); }
+  50%       { box-shadow: 0 0 0 16px rgba(255, 184, 0, 0); }
+}
+
+/* Mobile menu drop-in */
+@keyframes fade-slide-down {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero scroll-down indicator */
+@keyframes bounce-y {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(7px); }
+}
+
+/* CTA section ambient floating particles */
+@keyframes float-particle {
+  0%, 100% { transform: translateY(0px) scale(1);   opacity: 0.5; }
+  33%       { transform: translateY(-22px) scale(1.15); opacity: 0.85; }
+  66%       { transform: translateY(-10px) scale(0.9);  opacity: 0.35; }
+}
+
+/* Respect OS-level reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
