@@ -40,23 +40,6 @@ html {
 }
 
 /* Leaf fly-in entrances */
-@keyframes leaf-fly-left {
-  from { opacity: 0; transform: translate(-44px, 16px) rotate(-8deg) scale(0.8); }
-  to   { opacity: 1; transform: none; }
-}
-@keyframes leaf-fly-right {
-  from { opacity: 0; transform: translate(44px, 12px) rotate(8deg) scale(0.8); }
-  to   { opacity: 1; transform: none; }
-}
-@keyframes leaf-fly-top {
-  from { opacity: 0; transform: translate(10px, -44px) rotate(-6deg) scale(0.78); }
-  to   { opacity: 1; transform: none; }
-}
-@keyframes leaf-fly-bottom {
-  from { opacity: 0; transform: translate(-14px, 44px) rotate(10deg) scale(0.78); }
-  to   { opacity: 1; transform: none; }
-}
-
 /* Hero background Ken Burns: slow zoom out */
 @keyframes hero-zoom {
   from { transform: scale(1.09); }
@@ -106,16 +89,55 @@ html {
   50%       { box-shadow: 0 0 0 16px rgba(255, 184, 0, 0); }
 }
 
-/* Mobile menu drop-in */
-@keyframes fade-slide-down {
-  from { opacity: 0; transform: translateY(-10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
 /* Hero scroll-down indicator */
 @keyframes bounce-y {
   0%, 100% { transform: translateY(0); }
   50%       { transform: translateY(7px); }
+}
+
+/* Hero title: editorial clip-reveal (each line slides up from below) */
+@keyframes text-reveal {
+  from { transform: translateY(105%); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+/* PGPR letters: each character pops up with a slight overshoot */
+@keyframes char-pop {
+  0%   { opacity: 0; transform: translateY(55%) skewY(4deg); }
+  65%  { transform: translateY(-3%) skewY(0); }
+  100% { opacity: 1; transform: none; }
+}
+
+/* PGPR brand: gradient shimmer sweep — background-position slides across */
+@keyframes text-shimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+/* Hero subtitle: de-blur drift in */
+@keyframes text-blur-in {
+  from { opacity: 0; filter: blur(12px); transform: translateY(10px); }
+  to   { opacity: 1; filter: blur(0);    transform: translateY(0); }
+}
+
+/* CTA buttons: spring stamp with overshoot */
+@keyframes btn-stamp {
+  0%   { opacity: 0; transform: scale(0.86) translateY(20px); }
+  65%  { transform: scale(1.04) translateY(-2px); opacity: 1; }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Hero overlay: cinematic dark fade-in after landscape briefly shows */
+@keyframes overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Hero frame rim glow — brief green pulse as card shape locks in */
+@keyframes hero-rim {
+  0%   { box-shadow: 0 0 0    rgba(45, 186, 93, 0); }
+  50%  { box-shadow: 0 0 64px rgba(45, 186, 93, 0.28); }
+  100% { box-shadow: 0 0 0    rgba(45, 186, 93, 0); }
 }
 
 /* CTA section ambient floating particles */
