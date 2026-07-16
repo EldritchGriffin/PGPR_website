@@ -30,6 +30,7 @@ export const SOLUTION_ICON_MAP: Record<string, string> = {
   shrimp: SOL_SHRIMP_ICON,
   rd: SOL_RD_ICON,
   cert: SOL_CERT_ICON,
+  support: SOL_SUPPORT_ICON,
 };
 
 export const YELLOW_LEAF1      = "/assets/yellow-leaf1.svg";
@@ -47,7 +48,11 @@ export const LEAF_TINY_B       = "/assets/leaf-tiny-b.png";
 // `key` looks up its display label from siteSettings.navLabels (CMS-editable);
 // the href/id targets themselves are structural and stay in code.
 
-/** Home page: section-scroll based links (use `id` for anchor href) */
+/**
+ * Home page section IDs, in order — used by the on-page scroll-spy dots
+ * (`SectionDots`) and the navbar's active-section tracking. Every entry is a
+ * real section that lives on the home page, so these stay `id`-based.
+ */
 export const HOME_NAV_LINKS = [
   { key: "home",         id: "hero" },
   { key: "sustainable",  id: "sustainable" },
@@ -55,6 +60,21 @@ export const HOME_NAV_LINKS = [
   { key: "services",     id: "solutions" },
   { key: "technologies", id: "technology" },
   { key: "about",        id: "pioneering" },
+] as const;
+
+/**
+ * Home page TOP navbar links. Same order as the section dots, but any item that
+ * has a dedicated route navigates there instead of smooth-scrolling to a
+ * section — currently "About" → /about. The rest have no standalone page, so
+ * they stay `id`-based anchor scrolls.
+ */
+export const HOME_TOP_NAV_LINKS = [
+  { key: "home",         id: "hero" },
+  { key: "sustainable",  id: "sustainable" },
+  { key: "products",     id: "products" },
+  { key: "services",     id: "solutions" },
+  { key: "technologies", id: "technology" },
+  { key: "about",        href: "/about" },
 ] as const;
 
 /** Default multi-page links (href-based) */
@@ -71,7 +91,7 @@ export const PRODUCTS_NAV_LINKS = [
   { key: "products",     href: "/#products" },
   { key: "services",     href: "/#solutions" },
   { key: "technologies", href: "/#technology" },
-  { key: "about",        href: "/#pioneering" },
+  { key: "about",        href: "/about" },
 ] as const;
 
 // ─── CTA section particles ────────────────────────────────────────────────────

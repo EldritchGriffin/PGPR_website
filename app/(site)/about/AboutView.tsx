@@ -241,41 +241,6 @@ function DifferentiatorsSection({
 
 // ─── Team Section ─────────────────────────────────────────────────────────────
 
-// ─── Team Card: vertical (photo top, name+role below) ─────────────────────────
-function TeamCard({
-  member, radius = "6px",
-}: {
-  member: SanityTeamMember; radius?: string;
-}) {
-  return (
-    <div
-      className="flex flex-col justify-center items-center p-4 gap-3 flex-1 self-stretch"
-      style={{
-        background: "rgba(45, 186, 93, 0.1)",
-        borderRadius: radius,
-      }}
-    >
-      <div className="w-[72px] h-[72px] rounded-full bg-[#c4dcc5] shrink-0 overflow-hidden flex items-center justify-center text-base font-bold text-[#255c38]">
-        {member.photo
-          ? <Image src={member.photo} alt={member.name} width={72} height={72} className="w-full h-full object-cover" />
-          : member.name.split(" ").map(n => n[0]).join("").slice(0, 2)
-        }
-      </div>
-      <div className="flex flex-col justify-center items-center gap-1 self-stretch">
-        <div className="flex items-center justify-center gap-1">
-          <span className="font-bold text-[#2dba5d] text-sm text-center leading-[125%]">
-            {member.name}
-          </span>
-          {member.flag && <span className="text-xs">{member.flag}</span>}
-        </div>
-        <span className="font-bold text-[#f4fff8] text-xs leading-[140%] text-center self-stretch whitespace-pre-line">
-          {member.role}
-        </span>
-      </div>
-    </div>
-  );
-}
-
 // ─── CEO Card: horizontal (photo left, name+role right) ──────────────────────
 function CeoCard({ member }: { member: SanityTeamMember }) {
   return (
@@ -357,14 +322,6 @@ function TeamSection({
   rdTeamLabel: AboutPageData["rdTeamLabel"];
   teamBadges: AboutPageData["teamBadges"];
 }) {
-  // BD grid: rows of 2 (excluding CEO, which is businessTeam[0])
-  const bdRest = businessTeam.slice(1);
-  const bdRows: SanityTeamMember[][] = [];
-  for (let i = 0; i < bdRest.length; i += 2) {
-    bdRows.push(bdRest.slice(i, i + 2));
-  }
-  const lastBdRowIdx = bdRows.length - 1;
-
   return (
     <motion.section
       className="w-full py-10 lg:py-12"
@@ -406,24 +363,6 @@ function TeamSection({
 
               {/* CEO — horizontal card */}
               <CeoCard member={businessTeam[0]} />
-
-              {/* Grid members — rows of 2 */}
-              {bdRows.map((row, ri) => (
-                <div key={ri} className="flex flex-col sm:flex-row items-center gap-4 self-stretch">
-                  {row.map((m, ci) => {
-                    const isLastRow = ri === lastBdRowIdx;
-                    const isLeftCard = ci === 0;
-                    const r = isLastRow && isLeftCard ? "6px 6px 6px 16px" : "6px";
-                    return (
-                      <TeamCard
-                        key={m.name}
-                        member={m}
-                        radius={r}
-                      />
-                    );
-                  })}
-                </div>
-              ))}
             </motion.div>
 
             {/* ═══ R&D and Production ═══ */}
@@ -440,19 +379,8 @@ function TeamSection({
                 </span>
               </div>
 
-              {/* R&D members — vertical stack of horizontal cards */}
-              {rdTeam.map((m, i) => {
-                const isFirst = i === 0;
-                const isLast = i === rdTeam.length - 1;
-                const r = isFirst ? "6px 16px 6px 6px" : isLast ? "6px 6px 6px 16px" : "6px";
-                return (
-                  <RdCard
-                    key={m.name}
-                    member={m}
-                    radius={r}
-                  />
-                );
-              })}
+              {/* Founder — horizontal card */}
+              <RdCard member={rdTeam[0]} radius="6px 16px 6px 6px" />
             </motion.div>
           </div>
 

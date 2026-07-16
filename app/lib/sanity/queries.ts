@@ -53,7 +53,7 @@ export type HomePageData = {
     ctaTarget: "contact" | "external";
     externalHref?: string;
     image: string;
-    iconKey: "shrimp" | "rd" | "cert";
+    iconKey: "shrimp" | "rd" | "cert" | "support";
   }[];
   technologyHeading: string;
   techItems: { image: string; label: string; desc: string }[];

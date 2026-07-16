@@ -365,6 +365,8 @@ function Hero({
           className="text-[#f4fff8]/80 font-medium text-lg lg:text-[22px] max-w-xl mb-10 leading-relaxed"
         >
           {subtitleLine1}
+          {/* Space so the two lines don't run together when the <br> is hidden (< lg) */}
+          {" "}
           <br className="hidden lg:block" />
           {subtitleLine2}
         </p>

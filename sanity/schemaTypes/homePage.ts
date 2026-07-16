@@ -4,6 +4,7 @@ export const SOLUTION_ICON_KEYS = [
   { title: "Shrimp / chitosan", value: "shrimp" },
   { title: "R&D", value: "rd" },
   { title: "Certification", value: "cert" },
+  { title: "Support", value: "support" },
 ] as const;
 
 export const homePage = defineType({

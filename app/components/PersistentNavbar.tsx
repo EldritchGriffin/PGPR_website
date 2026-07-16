@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { Navbar } from "./Navbar";
-import { HOME_NAV_LINKS, DEFAULT_NAV_LINKS, PRODUCTS_NAV_LINKS } from "../lib/tokens";
+import { HOME_TOP_NAV_LINKS, DEFAULT_NAV_LINKS, PRODUCTS_NAV_LINKS } from "../lib/tokens";
 import type { SiteSettingsData } from "../lib/sanity/queries";
 
 /**
@@ -14,7 +14,7 @@ export function PersistentNavbar({ navLabels }: { navLabels: SiteSettingsData["n
   const pathname = usePathname();
 
   if (pathname === "/") {
-    return <Navbar variant="hero" links={HOME_NAV_LINKS} navLabels={navLabels} />;
+    return <Navbar variant="hero" links={HOME_TOP_NAV_LINKS} navLabels={navLabels} />;
   }
   if (pathname.startsWith("/products")) {
     return <Navbar links={PRODUCTS_NAV_LINKS} navLabels={navLabels} />;

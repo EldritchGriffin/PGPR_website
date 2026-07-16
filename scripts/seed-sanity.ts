@@ -183,7 +183,7 @@ const SUSTAIN_TABS = [
 const SOLUTIONS = [
   { title: "Chitosan Production", desc: "Industrial-scale chitosan extraction with customizable grades and specifications for agricultural, nutraceutical, and cosmetic applications.", ctaLabel: "Go to Shop", ctaTarget: "external" as const, externalHref: "https://pgpr.tech", image: "sol-chitosan.png", iconKey: "shrimp" as const },
   { title: "R&D Consultation", desc: "Expert guidance in biotechnology research and development for agricultural and environmental projects.", ctaLabel: "Contact Experts", ctaTarget: "contact" as const, image: "sol-rd.jpg", iconKey: "rd" as const },
-  { title: "Biofarming Support", desc: "End-to-end support for transitioning to biological farming practices — soil analysis, crop planning, and on-site training.", ctaLabel: "Contact Experts", ctaTarget: "contact" as const, image: "sol-support.jpg", iconKey: "cert" as const },
+  { title: "Biofarming Support", desc: "End-to-end support for transitioning to biological farming practices — soil analysis, crop planning, and on-site training.", ctaLabel: "Contact Experts", ctaTarget: "contact" as const, image: "sol-support.jpg", iconKey: "support" as const },
   { title: "BIOMAROC Certification", desc: "Assistance in obtaining BIOMAROC organic certification for your agricultural products and processes.", ctaLabel: "Contact Experts", ctaTarget: "contact" as const, image: "sol-biomaroc.jpg", iconKey: "cert" as const },
 ];
 
