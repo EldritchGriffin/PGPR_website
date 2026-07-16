@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 
 interface ContactPayload {
   name: string;
   email: string;
+  subject?: string;
   message: string;
 }
 
@@ -15,7 +17,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
-  const { name, email, message } = body;
+  const { name, email, subject, message } = body;
 
   if (!name?.trim() || !email?.trim() || !message?.trim()) {
     return NextResponse.json({ error: "Required fields are missing" }, { status: 422 });
@@ -26,21 +28,36 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid email address" }, { status: 422 });
   }
 
-  // TODO: integrate an email service here (e.g. Resend, Nodemailer, SendGrid)
-  // Example with Resend:
-  //   await resend.emails.send({
-  //     from: "website@pgpr.tech",
-  //     to: "contact@pgpr.tech",
-  //     subject: `Contact form from ${name}`,
-  //     text: `From: ${name} <${email}>\n\n${message}`,
-  //   });
+  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, CONTACT_TO_EMAIL } = process.env;
 
-  console.log("[contact form]", {
-    name,
-    email,
-    message,
-    receivedAt: new Date().toISOString(),
+  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASSWORD) {
+    console.error("[contact form] Missing SMTP environment configuration");
+    return NextResponse.json({ error: "Server is not configured to send email" }, { status: 500 });
+  }
+
+  const port = Number(SMTP_PORT);
+  const transporter = nodemailer.createTransport({
+    host: SMTP_HOST,
+    port,
+    secure: port === 465,
+    auth: {
+      user: SMTP_USER,
+      pass: SMTP_PASSWORD,
+    },
   });
+
+  try {
+    await transporter.sendMail({
+      from: `"PGPR Website" <${SMTP_USER}>`,
+      to: CONTACT_TO_EMAIL || "hello@pgpr.tech",
+      replyTo: `"${name}" <${email}>`,
+      subject: subject?.trim() ? `[Contact form] ${subject.trim()}` : `New contact form submission from ${name}`,
+      text: `From: ${name} <${email}>\n\n${message}`,
+    });
+  } catch (error) {
+    console.error("[contact form] Failed to send email", error);
+    return NextResponse.json({ error: "Failed to send message" }, { status: 502 });
+  }
 
   return NextResponse.json({ success: true });
 }
